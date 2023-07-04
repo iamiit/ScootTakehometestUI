@@ -1,0 +1,273 @@
+/* Add this CSS code to your component's CSS file */
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-label {
+  font-weight: bold;
+}
+
+.filter-input {
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.add-todo {
+  margin-left: 10px;
+}
+
+.todo-form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.todo-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.todo-table th,
+.todo-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.todo-table th {
+  background-color: #f0f0f0;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  margin: 0 10px;
+}
+
+
+/*ADD style */
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-input-group {
+  margin-right: 10px;
+}
+
+.filter-label {
+  margin-right: 10px;
+}
+
+.filter-input {
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.add-todo-button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.add-todo-button:hover {
+  opacity: 0.8;
+}
+
+.add-todo-button:focus {
+  outline: none;
+}
+
+.add-todo-button:active {
+  transform: translateY(1px);
+}
+
+
+/* form style */
+
+.todo-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #f0f0f0; /* Gray background color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.save-button{
+  padding: 10px 15px;
+  margin-left: 10px;
+  background-color: green; /* Button background color */
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.cancel-button {
+  padding: 10px 15px;
+  margin-left: 10px;
+  background-color: orange; /* Button background color */
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.save-button:hover,
+.cancel-button:hover {
+  opacity: 0.8;
+}
+
+.save-button:focus,
+.cancel-button:focus {
+  outline: none;
+}
+
+.save-button:active,
+.cancel-button:active {
+  transform: translateY(1px);
+}
+
+/* Table Style*/
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.todo-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.todo-table th,
+.todo-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.todo-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.todo-table td:last-child {
+  white-space: nowrap;
+}
+
+.edit-button,
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  margin-right: 8px; /* Adjust the spacing as needed */
+}
+
+.button-text {
+  margin-left: 4px; /* Adjust the spacing as needed */
+}
+
+.edit-button:hover .button-text,
+.delete-button:hover .button-text {
+  display: inline; /* Show the text on hover */
+}
+
+.fa-edit,
+.fa-trash {
+  font-size: 20px; /* Adjust the icon size as needed */
+}
+.button-cell {
+  display: flex;
+  align-items: center;
+}
+.edit-button .fas {
+  color: green; /* Change the color to your desired color */
+}
+
+.delete-button .fas {
+  color: red; /* Change the color to your desired color */
+}
+
+.filter-input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.filter-label {
+  margin-right: 10px;
+}
+
+.filter-select {
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.filter-input {
+  padding: 5px;
+}

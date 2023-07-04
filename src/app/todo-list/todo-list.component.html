@@ -1,0 +1,96 @@
+<div class="filter-container">
+  <div class="filter-input-group">
+    <label for="filterInput" class="filter-label">Filter:</label>
+    <select [(ngModel)]="filterType" (ngModelChange)="filterTodos()" class="filter-select">
+      <option value="description">Description</option>
+      <option value="priority">Priority</option>
+    </select>
+    <input type="text" id="filterInput" [(ngModel)]="filterText" (ngModelChange)="filterTodos()" placeholder="Enter filter value" class="filter-input">
+  </div>  
+  
+  <div class="add-todo">
+    <button (click)="toggleInputForm()" class="add-todo-button">
+      <i class="fas fa-plus"></i> Create Item
+    </button>    
+  </div>
+</div>
+
+<form *ngIf="showInputForm" (submit)="addTodo()" class="todo-form">
+  <div class="form-group">
+    <label for="newTodoDescription">Todo Description</label>
+    <input type="text" name="newTodoDescription" [(ngModel)]="newTodoDescription" placeholder="Todo Description" class="form-input">
+  </div>
+  <div class="form-group">
+    <label for="newTodoDueDate">Due Date</label>
+    <input type="text" name="newTodoDueDate" [(ngModel)]="newTodoDueDate" placeholder="Due Date" class="form-input">
+  </div>
+  <div class="form-group">
+    <label for="newTodoPriority">Priority</label>
+    <input type="text" name="newTodoPriority" [(ngModel)]="newTodoPriority" placeholder="Priority" class="form-input">
+  </div>
+  <div class="button-group">
+    <button type="submit" class="save-button">Save</button>
+    <button type="button" (click)="cancelAddTodo()" class="cancel-button">Cancel</button>
+  </div>
+</form>
+
+<form *ngIf="showInputFormEdit" (submit)="editTodo()" class="todo-form">
+  <div class="form-group">
+    <label for="newTodoDescription">Todo Description</label>
+    <input type="text" name="newTodoDescription" [(ngModel)]="newTodoDescription" placeholder="Todo Description" class="form-input">
+  </div>
+  <div class="form-group">
+    <label for="newTodoDueDate">Due Date</label>
+    <input type="text" name="newTodoDueDate" [(ngModel)]="newTodoDueDate" placeholder="Due Date" class="form-input">
+  </div>
+  <div class="form-group">
+    <label for="newTodoPriority">Priority</label>
+    <input type="text" name="newTodoPriority" [(ngModel)]="newTodoPriority" placeholder="Priority" class="form-input">
+  </div>
+  <div class="button-group">
+    <button type="submit" class="save-button">Save</button>
+    <button type="button" (click)="cancelAddTodo()" class="cancel-button">Cancel</button>
+  </div>
+</form>
+
+
+<!-- Table -->
+<div class="table-container">
+  <table class="todo-table">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Due Date</th>
+        <th>Priority</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let todo of paginatedTodos">
+        <td>{{ todo.description }}</td>
+        <td>{{ todo.dueDate }}</td>
+        <td>{{ todo.priority }}</td>
+        <td class="button-cell">
+          <button (click)="toggleInputFormEdit(todo)" class="edit-button">
+            <i class="fas fa-edit fa-lg"></i>
+            <span class="button-text">Edit</span>
+          </button>
+          <button (click)="deleteTodo(todo.id)" class="delete-button">
+            <i class="fas fa-trash fa-lg"></i>
+            <span class="button-text">Delete</span>
+          </button>
+        </td>               
+      </tr>
+    </tbody>
+  </table>
+
+
+<!-- Pagination -->
+<div class="pagination">
+  <button [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+</div>
+
+</div>
+

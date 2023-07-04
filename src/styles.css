@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+/* styles.css */
+
+/* Set the container to take up the full height of the viewport */
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header styles */
+  .header {
+    background-color: navy;
+    color: white;
+    padding: 16px;
+    margin-bottom: 16px; /* Add margin bottom to create distance */
+  }
+  
+  /* Content container */
+  .content {
+    flex: 1;
+    padding: 16px;
+  }
+  
+  /* Footer styles */
+  .footer {
+    background-color: navy;
+    color: white;
+    padding: 16px;
+    margin-top: auto; /* Push the footer to the bottom */
+  }
+  
+  
