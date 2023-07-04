@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Todo } from '../todo-list/models/todo.model';
 import { TodoService } from '../todo-list/services/todoServices';
 import Swal from 'sweetalert2';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todo-list',
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class TodoListComponent implements OnInit {
 
-  newTodoID:any;
+  newTodoID: any;
   newTodoDescription: string = '';
   newTodoDueDate: string = '';
   newTodoPriority: string = '';
@@ -26,7 +27,7 @@ export class TodoListComponent implements OnInit {
   currentPage = 1; // Current page number
   itemsPerPage = 10; // Number of items per page
 
-filterType = 'description'; // Filter type: description or priority
+  filterType = 'description'; // Filter type: description or priority
 
   constructor(private http: HttpClient,
     private todoService: TodoService) { }
@@ -36,15 +37,15 @@ filterType = 'description'; // Filter type: description or priority
   }
 
   fetchTodos(): void {
-    this.http.get<any[]>('http://localhost:3000/api/todos').subscribe(
-      (response: any[]) => {
+    this.http.get<any[]>('http://localhost:3000/api/todos').subscribe({
+      next: (response: any[]) => {
         this.todos = response;
         this.filterTodos();
       },
-      (error: any) => {
+      error: (error: any) => {
         console.error('Error fetching TODO items:', error);
       }
-    );
+    });
   }
 
   filterTodos(): void {
@@ -58,7 +59,7 @@ filterType = 'description'; // Filter type: description or priority
       return false;
     });
   }
-  
+
   get paginatedTodos(): any[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
@@ -101,55 +102,59 @@ filterType = 'description'; // Filter type: description or priority
     };
 
     this.todoService.addTodo(newTodo)
-      .subscribe(todo => {
-        // Todo added successfully, do something if needed
-        Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'New Item Added to the list successfully',
-          showConfirmButton: false,
-          timer: 1500
-        });
+      .pipe(
+        tap(() => {
+          // Todo added successfully, display success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'New Item Added to the list successfully',
+            showConfirmButton: false,
+            timer: 1500
+          });
 
-        // Reset the form values
-        this.newTodoDescription = '';
-        this.newTodoDueDate = '';
-        this.newTodoPriority = '';
-        this.showInputForm = false;
-        this.fetchTodos();
-
-      }, error => {
-        // Handle the error if occurred
-        console.error('Error adding Todo:', error);
+          // Reset the form values
+          this.resetForm();
+          this.showInputForm = false;
+        })
+      )
+      .subscribe({
+        next: () => {
+          // Fetch updated todos
+          this.fetchTodos();
+        },
+        error: (error: any) => {
+          // Handle the error if occurred
+          console.error('Error adding Todo:', error);
+        }
       });
   }
 
-  editTodo(): void {
+  async editTodo(): Promise<void> {
     const todo: Todo = {
       id: this.newTodoID,
       description: this.newTodoDescription,
       dueDate: this.newTodoDueDate,
       priority: this.newTodoPriority
     };
-  
-    this.todoService.editTodo(todo).subscribe(
-      () => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Data Updated Successful!',
-          text: 'The operation was successfully updated.',
-          showConfirmButton: false,
-          timer: 1500
-        });
-        
-        this.fetchTodos();
-        this.showInputFormEdit = false;
-        this.resetForm();
-      },
-      (error: any) => {
-        console.error('Failed to edit todo:', error);
-      }
-    );
+
+    try {
+      await this.todoService.editTodo(todo).toPromise();
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Data Updated Successful!',
+        text: 'The operation was successfully updated.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+      this.fetchTodos();
+      this.showInputFormEdit = false;
+      this.resetForm();
+    } catch (error) {
+      console.error('Failed to edit todo:', error);
+    }
   }
 
   deleteTodo(todoId: string): void {
@@ -161,26 +166,25 @@ filterType = 'description'; // Filter type: description or priority
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        this.todoService.deleteTodo(todoId).subscribe(
-          () => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Delete Successful!',
-              text: 'The operation was successfully deleted.',
-              showConfirmButton: false,
-              timer: 1500
-            });
-            this.fetchTodos();
-          },
-          error => {
-            console.error('Failed to delete todo:', error);
-          }
-        );
+        try {
+          await this.todoService.deleteTodo(todoId).toPromise();
+          Swal.fire({
+            icon: 'success',
+            title: 'Delete Successful!',
+            text: 'The operation was successfully deleted.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+
+          this.fetchTodos();
+        } catch (error) {
+          console.error('Failed to delete todo:', error);
+        }
       }
     });
-}
+  }
 
   cancelAddTodo(): void {
     this.showInputForm = false;
@@ -193,6 +197,5 @@ filterType = 'description'; // Filter type: description or priority
     this.newTodoDueDate = '';
     this.newTodoPriority = '';
   }
-
-
+  
 }
