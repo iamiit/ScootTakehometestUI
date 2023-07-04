@@ -133,6 +133,18 @@
   background-color: #f0f0f0; /* Gray background color */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 9999;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+}
+
+.form-header {
+  padding: 10px;
+  border-bottom: 2px solid #ccc;
+  background-color: #f0f0f0;
+}
+
+.form-header h3 {
+  margin: 0;
 }
 
 .form-group {

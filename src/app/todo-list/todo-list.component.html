@@ -16,6 +16,9 @@
 </div>
 
 <form *ngIf="showInputForm" (submit)="addTodo()" class="todo-form">
+  <div class="form-header">
+    <h3>Create Item</h3>
+  </div>
   <div class="form-group">
     <label for="newTodoDescription">Todo Description</label>
     <input type="text" name="newTodoDescription" [(ngModel)]="newTodoDescription" placeholder="Todo Description" class="form-input">
@@ -34,7 +37,11 @@
   </div>
 </form>
 
+
 <form *ngIf="showInputFormEdit" (submit)="editTodo()" class="todo-form">
+  <div class="form-header">
+    <h3>Edit Item</h3>
+  </div>
   <div class="form-group">
     <label for="newTodoDescription">Todo Description</label>
     <input type="text" name="newTodoDescription" [(ngModel)]="newTodoDescription" placeholder="Todo Description" class="form-input">
